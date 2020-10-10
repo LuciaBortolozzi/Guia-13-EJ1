@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        function validaciones(){
+            var nro = document.getElementById("nro").value.trim();
+            var motorLength = document.getElementById("motor").value.trim().length;
+            var mail = document.getElementById("correo").value.trim();
+            const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+            if ( nro < 0 || nro > 100)
+                alert("Numero debe ser entre 0 y 100");
+            if ( motorLength <= 8)
+                alert("Motor menor a 8 caracteres");
+            if ( !regex.test(mail))
+                alert("Mail incorrecto");
+        }
+
+        function limpiar(){
+            return confirm("¿Limpiar los datos?");
+        }
+
+    </script>
+</head>
+<body>
+<form>
+    <table border="1" cellpadding="2">
+        <tr><td colspan=2 align=center>Vehiculo</td></tr>
+        <tr>
+            <td>Numero unidad:</td>
+            <td><input id="nro" type="text"></td>
+        </tr>
+        <tr>
+            <td>Año:</td>
+            <td>
+                <select id="anio">
+                    <option>2018</option>
+                    <option>2019</option>
+                    <option>2020</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Marca:</td>
+            <td>
+                <select>
+                    <option>AUDI</option>
+                    <option>BMW</option>
+                    <option>TOYOTA</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Modelo:</td>
+            <td>
+                <select>
+                    <option>M850i</option>
+                    <option>NOTE</option>
+                    <option>PALIO</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Motor:</td>
+            <td><input id="motor" type="text"></td>
+        </tr>
+        <tr>
+            <td>Patente:</td>
+            <td><input id="patente" type="text"></td>
+        </tr>
+        <tr><td colspan=2 align=center>Tipo:</td></tr>
+        <tr>
+            <td>
+                Propio<input name="tipo" value="propio" id="propio" type="radio">
+            </td>
+            <td>
+                Alquilado<input name="tipo" value="alquilado" id="alquilado" type="radio">
+            </td>
+        </tr>
+        <tr><td colspan=2 align=center>Accesorios:</td></tr>
+        <tr>
+            <td>
+                Airbag<input type="checkbox">
+            </td>
+            <td>
+                Aire Acondicionado<input type="checkbox">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MP3<input type="checkbox">
+            </td>
+            <td>
+                Vidrios Polarizados<input type="checkbox">
+            </td>
+        </tr>
+        <tr>
+            <td>Deposito:</td>
+            <td><input id="deposito" type="text"></td>
+        </tr>
+        <tr>
+            <td>Precio de compra:</td>
+            <td><input id="precioCompra" type="text"></td>
+        </tr>
+        <tr>
+            <td>Porcentaje de depreciacion anual:</td>
+            <td><input id="porcentaje" type="text"></td>
+        </tr>
+        <tr>
+            <td>Precio de alquiler:</td>
+            <td><input id="precioAlquiler" type="text"></td>
+        </tr>
+
+
+    </table>
+
+    <table border="1" cellpadding="2">
+
+        <tr><td colspan=2 align=center>Responsable</td></tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text"></td>
+        </tr>
+
+        <tr>
+            <td>Apellido:</td>
+            <td><input type="text"></td>
+        </tr>
+
+        <tr>
+            <td>Correo Eletronico:</td>
+            <td><input id="correo" type="text"></td>
+        </tr>
+
+        <tr><td colspan=2 align=center><input onclick="validaciones()" id="confirmar" type="submit" value="Confirmar"></td></tr>
+        <tr><td colspan=2 align=center><input onclick="limpiar()" id="limpiar" type="reset" value="Limpiar"></td></tr>
+        <tr><td colspan=2 align=center><input id="enviar" type="button" value="Enviar"></td></tr>
+    </table>
+
+</form>
+</body>
+</html>
