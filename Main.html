@@ -77,18 +77,15 @@
         }
 
         function getAnio(sel){
-            var anio = sel.options[sel.selectedIndex].text;
-            return anio;
+            return sel.options[sel.selectedIndex].text;
         }
 
         function getMarca(sel){
-            var marca = sel.options[sel.selectedIndex].text;
-            return marca;
+            return sel.options[sel.selectedIndex].text;
         }
 
         function getModelo(sel){
-            var modelo = sel.options[sel.selectedIndex].text;
-            return modelo;
+            return sel.options[sel.selectedIndex].text;
         }
 
         function enviar() {
@@ -200,12 +197,12 @@
         </tr>
         <tr>
             <td>Nombre:</td>
-            <td><input type="text"></td>
+            <td><input id="nombre" type="text"></td>
         </tr>
 
         <tr>
             <td>Apellido:</td>
-            <td><input type="text"></td>
+            <td><input id="apellido" type="text"></td>
         </tr>
 
         <tr>
