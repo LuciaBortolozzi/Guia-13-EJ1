@@ -2,33 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Vehiculos</title>
     <script>
 
-        function validaciones(){
+        function validaciones() {
             var nro = document.getElementById("nro").value.trim();
             var motorLength = document.getElementById("motor").value.trim().length;
             var mail = document.getElementById("correo").value.trim();
             const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-            if ( nro < 0 || nro > 100)
+            if (nro < 0 || nro > 100)
                 alert("Numero debe ser entre 0 y 100");
-            if ( motorLength <= 8)
+            if (motorLength <= 8)
                 alert("Motor menor a 8 caracteres");
-            if ( !regex.test(mail))
+            if (!regex.test(mail))
                 alert("Mail incorrecto");
+
         }
 
-        function limpiar(){
+        function mostrarIngreso() {
+            document.getElementById("nroAux").innerText = document.getElementById("nro").value;
+
+            var anio = getAnio(document.getElementById("anio"));
+            document.getElementById("anioAux").innerText = anio;
+            var marca = getMarca(document.getElementById("marca"));
+            document.getElementById("marcaAux").innerText = marca;
+            var modelo = getModelo(document.getElementById("modelo"));
+            document.getElementById("modeloAux").innerText = modelo;
+
+            document.getElementById("motorAux").innerText = document.getElementById("motor").value;
+            document.getElementById("patenteAux").innerText = document.getElementById("patente").value;
+
+            var radios = document.getElementsByName("tipo");
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    document.getElementById("tipoAux").innerText = radios[i].value;
+                    break;
+                }
+            }
+
+            var checks = document.getElementsByName("accesorios");
+            var str = "";
+            for (var i = 0; i < checks.length; i++) {
+                if (checks[i].checked) {
+                    str += checks[i].value + "|";
+                }
+            }
+            document.getElementById("accesoriosAux").innerText = str;
+
+            document.getElementById("depositoAux").innerText = document.getElementById("deposito").value;
+
+            if (document.getElementById("propio").checked) {
+                var precio = parseFloat(document.getElementById("precioCompra").value);
+                var porcentaje = parseFloat(document.getElementById("porcentaje").value);
+                document.getElementById("precioAux").innerText = (precio - (precio * porcentaje / 100)).toString();
+            } else {
+                document.getElementById("precioAux").innerText = document.getElementById("precioAlquiler").innerText;
+            }
+
+            var antig = new Date().getFullYear() - parseInt(anio);
+            document.getElementById("antigAux").innerText = antig.toString();
+        }
+
+        function habilitarPropio() {
+            document.getElementById("trPrecioCompra").style.display = "block";
+            document.getElementById("trPorcentaje").style.display = "block";
+            document.getElementById("trPrecioAlquiler").style.display = "none";
+        }
+
+        function habilitarAlquilado() {
+            document.getElementById("trPrecioCompra").style.display = "none";
+            document.getElementById("trPorcentaje").style.display = "none";
+            document.getElementById("trPrecioAlquiler").style.display = "block";
+        }
+
+        function getAnio(sel){
+            var anio = sel.options[sel.selectedIndex].text;
+            return anio;
+        }
+
+        function getMarca(sel){
+            var marca = sel.options[sel.selectedIndex].text;
+            return marca;
+        }
+
+        function getModelo(sel){
+            var modelo = sel.options[sel.selectedIndex].text;
+            return modelo;
+        }
+
+        function enviar() {
+            alert("Mail enviado");
+        }
+
+        function limpiar() {
             return confirm("¿Limpiar los datos?");
         }
 
     </script>
 </head>
 <body>
-<form>
+<form onsubmit="validaciones();mostrarIngreso();" action="" method="post">
     <table border="1" cellpadding="2">
-        <tr><td colspan=2 align=center>Vehiculo</td></tr>
+        <tr>
+            <td colspan=2 align=center>Vehiculo</td>
+        </tr>
         <tr>
             <td>Numero unidad:</td>
             <td><input id="nro" type="text"></td>
@@ -46,7 +124,7 @@
         <tr>
             <td>Marca:</td>
             <td>
-                <select>
+                <select id="marca">
                     <option>AUDI</option>
                     <option>BMW</option>
                     <option>TOYOTA</option>
@@ -56,7 +134,7 @@
         <tr>
             <td>Modelo:</td>
             <td>
-                <select>
+                <select id="modelo">
                     <option>M850i</option>
                     <option>NOTE</option>
                     <option>PALIO</option>
@@ -71,55 +149,55 @@
             <td>Patente:</td>
             <td><input id="patente" type="text"></td>
         </tr>
-        <tr><td colspan=2 align=center>Tipo:</td></tr>
         <tr>
-            <td>
-                Propio<input name="tipo" value="propio" id="propio" type="radio">
-            </td>
-            <td>
-                Alquilado<input name="tipo" value="alquilado" id="alquilado" type="radio">
-            </td>
-        </tr>
-        <tr><td colspan=2 align=center>Accesorios:</td></tr>
-        <tr>
-            <td>
-                Airbag<input type="checkbox">
-            </td>
-            <td>
-                Aire Acondicionado<input type="checkbox">
-            </td>
+            <td colspan=2 align=center>Tipo:</td>
         </tr>
         <tr>
             <td>
-                MP3<input type="checkbox">
+                Propio<input name="tipo" value="propio" id="propio" onclick="habilitarPropio()" type="radio">
             </td>
             <td>
-                Vidrios Polarizados<input type="checkbox">
+                Alquilado<input name="tipo" value="alquilado" id="alquilado" onclick="habilitarAlquilado()" type="radio">
+            </td>
+        </tr>
+        <tr>
+            <td colspan=2 align=center>Accesorios:</td>
+        </tr>
+        <tr>
+            <td>
+                Airbag<input name="accesorios" type="checkbox" value="airbag">
+            </td>
+            <td>
+                Aire Acondicionado<input name="accesorios" type="checkbox" value="aire acondicionado">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MP3<input name="accesorios" type="checkbox" value="mp3">
+            </td>
+            <td>
+                Vidrios Polarizados<input name="accesorios" type="checkbox" value="vidrios polarizados">
             </td>
         </tr>
         <tr>
             <td>Deposito:</td>
             <td><input id="deposito" type="text"></td>
         </tr>
-        <tr>
+        <tr id="trPrecioCompra" style="display: none">
             <td>Precio de compra:</td>
             <td><input id="precioCompra" type="text"></td>
         </tr>
-        <tr>
+        <tr id="trPorcentaje" style="display: none">
             <td>Porcentaje de depreciacion anual:</td>
             <td><input id="porcentaje" type="text"></td>
         </tr>
-        <tr>
+        <tr id="trPrecioAlquiler" style="display: none">
             <td>Precio de alquiler:</td>
             <td><input id="precioAlquiler" type="text"></td>
         </tr>
-
-
-    </table>
-
-    <table border="1" cellpadding="2">
-
-        <tr><td colspan=2 align=center>Responsable</td></tr>
+        <tr>
+            <td colspan=2 align=center>Responsable</td>
+        </tr>
         <tr>
             <td>Nombre:</td>
             <td><input type="text"></td>
@@ -135,11 +213,65 @@
             <td><input id="correo" type="text"></td>
         </tr>
 
-        <tr><td colspan=2 align=center><input onclick="validaciones()" id="confirmar" type="submit" value="Confirmar"></td></tr>
-        <tr><td colspan=2 align=center><input onclick="limpiar()" id="limpiar" type="reset" value="Limpiar"></td></tr>
-        <tr><td colspan=2 align=center><input id="enviar" type="button" value="Enviar"></td></tr>
+        <tr>
+            <td colspan=2 align=center>
+                <input type="submit" value="Confirmar"/>
+                <input type="button" onclick="validaciones();enviar();" id="enviar" value="Enviar"/>
+                <input type="reset" onclick="return limpiar()" id="limpiar" value="Limpiar"/>
+            </td>
+        </tr>
     </table>
-
 </form>
+<br>
+<table border="1" cellpadding="2">
+    <tr>
+        <td colspan=2 align=center>Vehiculo Ingresado</td>
+    </tr>
+    <tr>
+        <td>Numero unidad:</td>
+        <td><span id="nroAux"></span></td>
+    </tr>
+    <tr>
+        <td>Año:</td>
+        <td><span id="anioAux"></span></td>
+    </tr>
+    <tr>
+        <td>Marca:</td>
+        <td><span id="marcaAux"></span></td>
+    </tr>
+    <tr>
+        <td>Modelo:</td>
+        <td><span id="modeloAux"></span></td>
+    </tr>
+    <tr>
+        <td>Motor:</td>
+        <td><span id="motorAux"></span></td>
+    </tr>
+    <tr>
+        <td>Patente:</td>
+        <td><span id="patenteAux"></span></td>
+    </tr>
+    <tr>
+        <td>Tipo:</td>
+        <td><span id="tipoAux"></span></td>
+    </tr>
+    <tr>
+        <td>Accesorios:</td>
+        <td><span id="accesoriosAux"></span></td>
+    </tr>
+    <tr>
+        <td>Deposito:</td>
+        <td><span id="depositoAux"></span></td>
+    </tr>
+    <tr>
+        <td>Antigüedad:</td>
+        <td><span id="antigAux"></span></td>
+    </tr>
+    <tr>
+        <td>Precio:</td>
+        <td><span id="precioAux"></span></td>
+    </tr>
+
+</table>
 </body>
 </html>
